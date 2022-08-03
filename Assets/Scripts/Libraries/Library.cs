@@ -16,7 +16,9 @@ namespace Libraries
         [SerializeField] private List<Description> Descriptions = new List<Description>();
         
         private Dictionary<int, IGameDescription> _gameDescriptions = new Dictionary<int, IGameDescription>();
-       
+        private Dictionary<int, IUnitCharacteristicsDescription> _unitCharacteristicsDescriptions =
+            new Dictionary<int, IUnitCharacteristicsDescription>();
+
 
         public void Init()
         {
@@ -26,6 +28,9 @@ namespace Libraries
                 {
                     case IGameDescription data:
                         _gameDescriptions.Add(description.GetDescription.Id, data);
+                        break;
+                    case IUnitCharacteristicsDescription data:
+                        _unitCharacteristicsDescriptions.Add(description.GetDescription.Id,data);
                         break;
                 }
             }
@@ -52,6 +57,15 @@ namespace Libraries
                 return needed;
             }
             throw new Exception($"Game description with id {id} not found");
+        }
+
+        public IUnitCharacteristicsDescription GetUnitCharacteristicsDescription(int id)
+        {
+            if (_unitCharacteristicsDescriptions.TryGetValue(id, out var needed))
+            {
+                return needed;
+            }
+            throw new Exception($"Unit Characteristics description with id {id} not found");
         }
     }
 }
