@@ -5,8 +5,7 @@ namespace Services
 {
     public static class ServiceLocator
     {
-        private static readonly Dictionary<Type, object> ServiceContainer = 
-            new Dictionary<Type, object>();
+        private static readonly Dictionary<Type, object> ServiceContainer = new();
 
         public static void SetService<T>(T value) where T : class
         {

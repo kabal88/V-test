@@ -28,13 +28,7 @@ namespace Services
         {
             return _updatables.Where(predicate);
         }
-
-        public bool TryGetObject(out IUpdatable obj)
-        {
-            obj = _updatables.FirstOrDefault();
-            return obj != null;
-        }
-
+        
         public void UpdateLocal(float deltaTime)
         {
             foreach (var updatable in _updatables)

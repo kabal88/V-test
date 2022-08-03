@@ -8,6 +8,5 @@ namespace Interfaces
         void RegisterObject(T obj);
         void UnRegisterObject(T obj);
         IEnumerable<T> GetObjectsByPredicate(Func<T, bool> predicate);
-        bool TryGetObject(out T obj);
     }
 }

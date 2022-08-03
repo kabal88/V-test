@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description:
     _identifier: {fileID: 11400000, guid: 98d4b69734384004bb7c9e7680847086, type: 2}
-    _color: {r: 0.17647058, g: 0.37916514, b: 0.85882354, a: 1}
+    _color: {fileID: 2100000, guid: 5a201c2cd52b3f54493bcdc7efd3e975, type: 2}
     _healthData:
       MaxHealth: 0
       CurrentHealth: 0

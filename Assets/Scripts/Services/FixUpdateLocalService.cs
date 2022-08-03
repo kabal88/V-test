@@ -28,12 +28,7 @@ namespace Services
         {
             return _fixUpdatables.Where(predicate);
         }
-
-        public bool TryGetObject(out IFixUpdatable obj)
-        {
-            obj = _fixUpdatables.FirstOrDefault();
-            return obj != null;
-        }
+        
 
         public void FixedUpdateLocal()
         {

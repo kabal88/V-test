@@ -11,7 +11,7 @@ namespace Descriptions
     public class ColorCharacteristicDescription : IColorCharacteristicDescription
     {
         [SerializeField] private ColorIdentifier _identifier;
-        [SerializeField, BoxGroup("Color")] private Color _color;
+        [SerializeField, BoxGroup("Color")] private Material _color;
         [SerializeField, BoxGroup("Health"), HideLabel] private HealthData _healthData;
         [SerializeField, BoxGroup("Attack"), HideLabel] private AttackData _attackData;
         [SerializeField, BoxGroup("Movement")] private float _speed;
@@ -20,6 +20,6 @@ namespace Descriptions
         public HealthData HealthData => _healthData;
         public AttackData AttackData => _attackData;
         public float Speed => _speed;
-        public Color Color => _color;
+        public Material Color => _color;
     }
 }

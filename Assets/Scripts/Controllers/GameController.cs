@@ -3,6 +3,7 @@ using Libraries;
 using Models;
 using Services;
 using System;
+using Systems;
 using UI;
 using UnityEngine;
 using Views;
@@ -16,6 +17,7 @@ namespace Controllers
         private Library _library;
         private UpdateLocalService _updateLocalService;
         private FixUpdateLocalService _fixUpdateLocalService;
+        private SpawnService _spawnService;
         private GameUIController _gameUIController;
 
 
@@ -31,6 +33,9 @@ namespace Controllers
             ServiceLocator.SetService(_updateLocalService);
             _fixUpdateLocalService = new FixUpdateLocalService();
             ServiceLocator.SetService(_fixUpdateLocalService);
+            _spawnService = new SpawnService();
+            ServiceLocator.SetService(_spawnService);
+            _spawnService.Init();
 
         }
 

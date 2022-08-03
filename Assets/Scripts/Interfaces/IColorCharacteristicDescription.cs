@@ -4,6 +4,6 @@ namespace Interfaces
 {
     public interface IColorCharacteristicDescription : IUnitCharacteristicsDescription
     {
-        Color Color { get; }
+        Material Color { get; }
     }
 }
