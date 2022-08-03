@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38a26d7434724a32ae3a902175aba10c, type: 3}
-  m_Name: Base Unit Characteristics Description
+  m_Script: {fileID: 11500000, guid: 85fd207f4eec494b8bf4ce7ec2766792, type: 3}
+  m_Name: GreenColorID
   m_EditorClassIdentifier: 
-  description:
-    _identifier: {fileID: 0}
+  _id: 0

@@ -13,11 +13,10 @@ namespace Libraries
     [Serializable]
     public sealed class Library
     {
-        [SerializeField] private List<Description> Descriptions = new List<Description>();
+        [SerializeField] private List<Description> Descriptions = new();
         
-        private Dictionary<int, IGameDescription> _gameDescriptions = new Dictionary<int, IGameDescription>();
-        private Dictionary<int, IUnitCharacteristicsDescription> _unitCharacteristicsDescriptions =
-            new Dictionary<int, IUnitCharacteristicsDescription>();
+        private Dictionary<int, IGameDescription> _gameDescriptions = new();
+        private Dictionary<int, IUnitCharacteristicsDescription> _unitCharacteristicsDescriptions = new();
 
 
         public void Init()

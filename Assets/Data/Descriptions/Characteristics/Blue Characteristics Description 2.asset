@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc3b26aa9754bb49a386eaddc740eba, type: 3}
+  m_Name: Blue Characteristics Description 2
+  m_EditorClassIdentifier: 
+  description:
+    _identifier: {fileID: 11400000, guid: 98d4b69734384004bb7c9e7680847086, type: 2}
+    _color: {r: 0.17647058, g: 0.37916514, b: 0.85882354, a: 1}
+    _healthData:
+      MaxHealth: 0
+      CurrentHealth: 0
+    _attackData:
+      Attack: -15
+      AttackSpeed: 4
+    _speed: 10

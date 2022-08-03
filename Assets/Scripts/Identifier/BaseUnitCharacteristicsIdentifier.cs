@@ -3,7 +3,7 @@
 namespace Identifier
 {
     [CreateAssetMenu(fileName = "BaseUnitCharacteristicsID",
-        menuName = "Identifiers/Base Unit Characteristics Identifier")]
+        menuName = "Identifiers/Unit/Base Unit Characteristics Identifier")]
     public class BaseUnitCharacteristicsIdentifier : IdentifierContainer
     {
     }
