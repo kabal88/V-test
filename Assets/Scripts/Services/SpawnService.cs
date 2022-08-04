@@ -35,5 +35,13 @@ namespace Systems
         {
             return _spawnPoints.Where(predicate);
         }
+
+        public void ClearSpawnPoints(int side)
+        {
+            foreach (var spawnPoint in _spawnPoints.Where(spawnPoint => spawnPoint.Side == side))
+            {
+                spawnPoint.SetIsEmpty(true);
+            }
+        }
     }
 }

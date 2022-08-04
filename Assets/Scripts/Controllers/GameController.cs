@@ -4,10 +4,12 @@ using Models;
 using Services;
 using System;
 using System.Linq;
+using System.Transactions;
 using Data;
 using Factories;
 using Helpers;
 using Systems;
+using Views;
 
 
 namespace Controllers
@@ -21,12 +23,14 @@ namespace Controllers
         private SpawnService _spawnService;
         private GameUIController _gameUIController;
         private UnitFactory _unitFactory;
+        private TargetService _targetService;
 
 
-        public GameController(GameModel gameModel, Library library)
+        public GameController(GameModel gameModel, Library library, GameUIView gameUi)
         {
             _model = gameModel;
             _library = library;
+            _gameUIController = new GameUIController(gameUi);
         }
 
         public void Init()
@@ -38,35 +42,78 @@ namespace Controllers
             _spawnService = new SpawnService();
             ServiceLocator.SetService(_spawnService);
             _spawnService.Init();
+            _targetService = new TargetService();
+            ServiceLocator.SetService(_targetService);
 
             _unitFactory = new UnitFactory(_library);
-            
-            PrepareSideArmies();
+            PrepareAllArmies();
 
+            _gameUIController.StartButtonClicked += OnStartGame;
+            _gameUIController.RerollArmyButtonClicked += OnRerollArmy;
         }
 
-        private void PrepareSideArmies()
+        private void OnStartGame()
+        {
+            foreach (var unit in _model.UnitsOnField)
+            {
+                unit.SetActive(true);
+            }
+        }
+
+        private void OnRerollArmy(int sideID)
+        {
+            DestroyUnits(sideID);
+            
+            _spawnService.ClearSpawnPoints(sideID);
+
+            foreach (var setting in _model.SideRandomSettings.Where(settings => settings.SideID == sideID))
+            {
+                PrepareArmy(setting);
+            }
+        }
+
+        private void DestroyUnits(int sideID)
+        {
+            var units = _model.GetObjectsByPredicate(unit => unit.Side == sideID);
+
+            foreach (var unit in units)
+            {
+                unit.Dispose();
+                _targetService.UnRegisterObject(unit);
+                _model.UnRegisterObject(unit);
+            }
+        }
+        
+        private void PrepareAllArmies()
         {
             foreach (var setting in _model.SideRandomSettings)
             {
-                for (var i = 0; i < setting.ArmySize; i++)
+                PrepareArmy(setting);
+                _gameUIController.AddSide(setting.SideID);
+            }
+        }
+
+        private void PrepareArmy(SideSettings setting)
+        {
+            for (var i = 0; i < setting.ArmySize; i++)
+            {
+                var spawnList = _spawnService
+                    .GetObjectsByPredicate(point => point.Side == setting.SideID && point.IsEmpty);
+
+                var spawnPoint = spawnList.FirstOrDefault();
+
+                var config = new UnitConfig()
                 {
-                    var spawnList = _spawnService
-                        .GetObjectsByPredicate(point => point.Side == setting.SideID && point.IsEmpty);
-                    
-                    var spawnPoint  =  spawnList.FirstOrDefault();
+                    BaseUnitID = setting.BaseUnitCharacteristics.RandomID(),
+                    ColorID = setting.ColorCharacteristics.RandomID(),
+                    SideID = setting.SideID,
+                    SizeID = setting.SizeCharacteristics.RandomID(),
+                    ShapeID = setting.ShapeCharacteristics.RandomID()
+                };
 
-                    var config = new UnitConfig()
-                    {
-                        BaseUnitID = setting.BaseUnitCharacteristics.RandomID(),
-                        ColorID = setting.ColorCharacteristics.RandomID(),
-                        SideID = setting.SideID,
-                        SizeID = setting.SizeCharacteristics.RandomID(),
-                        ShapeID = setting.ShapeCharacteristics.RandomID()
-                    };
-
-                    _unitFactory.CreateUnit(config, spawnPoint);
-                }
+                var unit = _unitFactory.CreateUnit(config, spawnPoint);
+                _model.RegisterObject(unit);
+                _targetService.RegisterObject(unit);
             }
         }
 
@@ -82,7 +129,6 @@ namespace Controllers
 
         public void Dispose()
         {
-
         }
     }
 }

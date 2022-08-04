@@ -20,13 +20,7 @@ namespace Factories
         {
             _library = library;
         }
-
-        public UnitController CreateRandomUnit(int side)
-        {
-            var spawnData = ServiceLocator.Get<SpawnService>()
-                .GetObjectsByPredicate(point => point.Side == side && point.IsEmpty == false).FirstOrDefault();
-            return CreateUnit(0, 0, 0, 0, side, spawnData);
-        }
+        
 
         public UnitController CreateUnit(UnitConfig config, ISpawnPoint spawnPoint)
         {

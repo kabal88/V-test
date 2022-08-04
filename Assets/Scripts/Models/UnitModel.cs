@@ -4,6 +4,7 @@ namespace Models
 {
     public class UnitModel
     {
+        public bool IsActive { get; private set; }
         public int Side { get; }
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
@@ -19,6 +20,11 @@ namespace Models
             Side = side;
             Attack = attackData.Attack;
             AttackSpeed = attackData.AttackSpeed;
+        }
+
+        public void SetIsActive(bool value)
+        {
+            IsActive = value;
         }
     }
 }
