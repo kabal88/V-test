@@ -10,11 +10,13 @@ namespace Controllers
         private UnitModel _model;
         private UnitView _view;
 
-        public UnitController(UnitModel model, GameObject prefab, SpawnData spawnData, Material color, float size)
+        public UnitController(UnitModel model, GameObject root, GameObject shape, SpawnData spawnData, Material color, float size)
         {
             _model = model;
-            _view = GameObject.Instantiate(prefab, spawnData.Position, spawnData.Rotation).GetComponent<UnitView>();
-            _view.Init(color);
+            var obj = GameObject.Instantiate(root, spawnData.Position, spawnData.Rotation).GetComponent<UnitView>();
+            GameObject.Instantiate(shape, obj.transform);
+            _view = obj.GetComponent<UnitView>();
+            _view.Init(color,size);
         }
     }
 }

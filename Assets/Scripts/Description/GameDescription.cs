@@ -5,6 +5,7 @@ using Identifier;
 using Interfaces;
 using Models;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Descriptions
 {
@@ -13,9 +14,9 @@ namespace Descriptions
     {
         [SerializeField] private GameIdentifier _id;
 
-        [SerializeField] private List<SideSettings> SideSettings;
+        [SerializeField] private List<SideSettings> _sideRandomSettings;
 
         public int Id => _id.Id;
-        public GameModel Model => new GameModel();
+        public GameModel Model => new GameModel(_sideRandomSettings);
     }
 }

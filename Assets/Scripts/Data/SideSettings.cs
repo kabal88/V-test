@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Identifier;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Data
 {
@@ -9,12 +11,14 @@ namespace Data
     public class SideSettings
     {
         [SerializeField] private SideIdentifier _sideIdentifier;
-        [SerializeField] private List<RandomContainer<BaseUnitCharacteristicsIdentifier>> _baseUnitCharacteristics;
-        [SerializeField] private List<RandomContainer<ColorIdentifier>> _colorCharacteristics;
-        [SerializeField] private List<RandomContainer<SizeIdentifier>> _sizeCharacteristics;
-        [SerializeField] private List<RandomContainer<ShapeIdentifier>> _shapeCharacteristics;
+        [SerializeField] private int _armySize = 20;
+        [SerializeField, TableList] private List<RandomContainer<BaseUnitCharacteristicsIdentifier>> _baseUnitCharacteristics;
+        [SerializeField, TableList] private List<RandomContainer<ColorIdentifier>> _colorCharacteristics;
+        [SerializeField, TableList] private List<RandomContainer<SizeIdentifier>> _sizeCharacteristics;
+        [SerializeField, TableList] private List<RandomContainer<ShapeIdentifier>> _shapeCharacteristics;
 
         public int SideID => _sideIdentifier.Id;
+        public int ArmySize => _armySize; 
         public IEnumerable<RandomContainer<BaseUnitCharacteristicsIdentifier>> BaseUnitCharacteristics =>
             _baseUnitCharacteristics;
         public IEnumerable<RandomContainer<ColorIdentifier>> ColorCharacteristics => _colorCharacteristics;

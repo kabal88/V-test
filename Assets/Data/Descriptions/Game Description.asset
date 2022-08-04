@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description:
     _id: {fileID: 11400000, guid: f0ce524053361604c8b6a342d6c95858, type: 2}
-    SideSettings:
+    _sideRandomSettings:
     - _sideIdentifier: {fileID: 11400000, guid: 76d9463d55eaf894b8d168d23e1288e5, type: 2}
+      _armySize: 20
       _baseUnitCharacteristics:
       - Identifier: {fileID: 11400000, guid: 7c264d6629897a842b1e6690e8700d75, type: 2}
         Weight: 1
@@ -37,6 +38,7 @@ MonoBehaviour:
       - Identifier: {fileID: 11400000, guid: 01d997aee91857046b1967e2b2126535, type: 2}
         Weight: 1
     - _sideIdentifier: {fileID: 11400000, guid: 0763ca2ae77e1a549a8046426c26d0c9, type: 2}
+      _armySize: 20
       _baseUnitCharacteristics:
       - Identifier: {fileID: 11400000, guid: 7c264d6629897a842b1e6690e8700d75, type: 2}
         Weight: 1
@@ -48,9 +50,9 @@ MonoBehaviour:
       - Identifier: {fileID: 11400000, guid: c688925ec2f459c49b262bf8ca154644, type: 2}
         Weight: 1
       _sizeCharacteristics:
-      - Identifier: {fileID: 11400000, guid: f6ba37f420244d24aab54d915977a39c, type: 2}
-        Weight: 1
       - Identifier: {fileID: 11400000, guid: 015b62f41b9c10c43bfbcd854382db36, type: 2}
+        Weight: 1
+      - Identifier: {fileID: 11400000, guid: f6ba37f420244d24aab54d915977a39c, type: 2}
         Weight: 1
       _shapeCharacteristics:
       - Identifier: {fileID: 11400000, guid: 6cc026a5a4b0da643a7626b69a235939, type: 2}

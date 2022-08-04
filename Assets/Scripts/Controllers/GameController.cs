@@ -3,10 +3,11 @@ using Libraries;
 using Models;
 using Services;
 using System;
+using System.Linq;
+using Data;
+using Factories;
+using Helpers;
 using Systems;
-using UI;
-using UnityEngine;
-using Views;
 
 
 namespace Controllers
@@ -19,6 +20,7 @@ namespace Controllers
         private FixUpdateLocalService _fixUpdateLocalService;
         private SpawnService _spawnService;
         private GameUIController _gameUIController;
+        private UnitFactory _unitFactory;
 
 
         public GameController(GameModel gameModel, Library library)
@@ -37,6 +39,35 @@ namespace Controllers
             ServiceLocator.SetService(_spawnService);
             _spawnService.Init();
 
+            _unitFactory = new UnitFactory(_library);
+            
+            PrepareSideArmies();
+
+        }
+
+        private void PrepareSideArmies()
+        {
+            foreach (var setting in _model.SideRandomSettings)
+            {
+                for (var i = 0; i < setting.ArmySize; i++)
+                {
+                    var spawnList = _spawnService
+                        .GetObjectsByPredicate(point => point.Side == setting.SideID && point.IsEmpty);
+                    
+                    var spawnPoint  =  spawnList.FirstOrDefault();
+
+                    var config = new UnitConfig()
+                    {
+                        BaseUnitID = setting.BaseUnitCharacteristics.RandomID(),
+                        ColorID = setting.ColorCharacteristics.RandomID(),
+                        SideID = setting.SideID,
+                        SizeID = setting.SizeCharacteristics.RandomID(),
+                        ShapeID = setting.ShapeCharacteristics.RandomID()
+                    };
+
+                    _unitFactory.CreateUnit(config, spawnPoint);
+                }
+            }
         }
 
         public void UpdateLocal(float deltaTime)

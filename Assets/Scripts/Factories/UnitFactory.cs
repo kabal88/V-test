@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Controllers;
 using Data;
 using Interfaces;
@@ -22,13 +23,19 @@ namespace Factories
 
         public UnitController CreateRandomUnit(int side)
         {
-          var spawnData =  ServiceLocator.Get<SpawnService>()
-                .GetObjectsByPredicate(point => point.Side == side && point.IsEmpty == false).FirstOrDefault()!.Data;
+            var spawnData = ServiceLocator.Get<SpawnService>()
+                .GetObjectsByPredicate(point => point.Side == side && point.IsEmpty == false).FirstOrDefault();
             return CreateUnit(0, 0, 0, 0, side, spawnData);
         }
 
-        private UnitController CreateUnit(int baseUnitID, int colorID, int sizeID, int shapeID, int side,
-            SpawnData spawnData)
+        public UnitController CreateUnit(UnitConfig config, ISpawnPoint spawnPoint)
+        {
+            return CreateUnit(config.BaseUnitID, config.ColorID, config.SizeID, config.ShapeID, config.SideID,
+                spawnPoint);
+        }
+
+        public UnitController CreateUnit(int baseUnitID, int colorID, int sizeID, int shapeID, int side,
+            ISpawnPoint spawnPoint)
         {
             var baseDescription = _library.GetUnitCharacteristicsDescription(baseUnitID);
             var colorDescription = _library.GetUnitCharacteristicsDescription(colorID);
@@ -42,8 +49,19 @@ namespace Factories
             var speed = baseDescription.Speed + colorDescription.Speed + sizeDescription.Speed + shapeDescription.Speed;
 
             Material color;
-            GameObject prefab;
+            GameObject root;
+            GameObject shape;
             float size;
+            SpawnData spawnData;
+
+            if (baseDescription is IBaseUnitCharacteristicDescription baseData)
+            {
+                root = baseData.RootPrefab;
+            }
+            else
+            {
+                root = default;
+            }
 
             if (colorDescription is IColorCharacteristicDescription colorData)
             {
@@ -56,11 +74,11 @@ namespace Factories
 
             if (shapeDescription is IShapeCharacteristicDescription shapeData)
             {
-                prefab = shapeData.Prefab;
+                shape = shapeData.Prefab;
             }
             else
             {
-                prefab = default;
+                shape = default;
             }
 
             if (sizeDescription is ISizeCharacteristicDescription sizeData)
@@ -72,9 +90,20 @@ namespace Factories
                 size = 1f;
             }
 
-            var model = new UnitModel(healthData, attackData, speed, side);
+            if (spawnPoint != null)
+            {
+                spawnData = spawnPoint.Data;
+                spawnPoint.SetIsEmpty(false);
+            }
+            else
+            {
+                spawnData = new SpawnData { Position = Vector3.zero, Rotation = quaternion.identity };
+            }
 
-            return new UnitController(model, prefab, spawnData, color, size);
+            var model = new UnitModel(healthData, attackData, speed, side);
+            var unit = new UnitController(model, root, shape, spawnData, color, size);
+
+            return unit;
         }
 
         private HealthData CalculateHealthData(params HealthData[] healthParams)

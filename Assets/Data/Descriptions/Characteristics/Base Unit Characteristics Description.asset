@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description:
     _identifier: {fileID: 11400000, guid: 7c264d6629897a842b1e6690e8700d75, type: 2}
+    _rootPrefab: {fileID: 2023157271314077250, guid: 77272f35199958f409fe069835f1728b, type: 3}
     _healthData:
       MaxHealth: 100
       CurrentHealth: 100

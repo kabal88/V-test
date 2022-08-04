@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using System.Linq;
+using Data;
 using Identifier;
 using Interfaces;
 using UnityEditor;
@@ -24,7 +25,7 @@ namespace Views
         public void Init()
         {
             Data = new SpawnData { Position = transform.position, Rotation = transform.rotation };
-            IsEmpty = false;
+            IsEmpty = true;
         }
 
 #if UNITY_EDITOR
@@ -39,7 +40,7 @@ namespace Views
             if (_side != null)
             {
                 Handles.color = new Color(1f, 0.7f, 0.1f, 1);
-                Handles.Label(position, _side.name);
+                Handles.Label(position, _side.name.LastOrDefault().ToString());
             }
             else
             {

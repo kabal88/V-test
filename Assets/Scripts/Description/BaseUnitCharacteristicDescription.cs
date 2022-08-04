@@ -8,9 +8,10 @@ using UnityEngine;
 namespace Descriptions
 {
     [Serializable]
-    public class BaseUnitCharacteristicDescription : IUnitCharacteristicsDescription
+    public class BaseUnitCharacteristicDescription : IBaseUnitCharacteristicDescription
     {
         [SerializeField] private BaseUnitCharacteristicsIdentifier _identifier;
+        [SerializeField, BoxGroup("Prefab"), AssetsOnly] private GameObject _rootPrefab;
         [SerializeField, BoxGroup("Health"), HideLabel] private HealthData _healthData;
         [SerializeField, BoxGroup("Attack"), HideLabel] private AttackData _attackData;
         [SerializeField, BoxGroup("Movement")] private float _speed;
@@ -19,5 +20,6 @@ namespace Descriptions
         public HealthData HealthData => _healthData;
         public AttackData AttackData => _attackData;
         public float Speed => _speed;
+        public GameObject RootPrefab => _rootPrefab;
     }
 }
