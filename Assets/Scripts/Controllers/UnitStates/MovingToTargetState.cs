@@ -34,7 +34,6 @@ namespace Controllers.UnitStates
         public override void StartState()
         {
             Unit.View.SetTarget(Unit.Model.Target.Position);
-            Unit.View.Callback = DrawGizmo; //todo: delete
         }
 
         public override void UpdateLocal(float deltaTime)
@@ -63,14 +62,6 @@ namespace Controllers.UnitStates
             Unit.View.SetTarget(Unit.Model.Target.Position);
             
            
-        }
-
-        private void DrawGizmo()
-        {
-            Gizmos.color = Color.gray;
-            Gizmos.DrawWireSphere(Unit.Model.Position, Unit.Model.AttackDistance);
-            Gizmos.color = Color.black;
-            Gizmos.DrawLine(Unit.Model.Position,Unit.Model.Target.Position);
         }
     }
 }

@@ -87,6 +87,7 @@ namespace Controllers
         {
             foreach (var sideRandomSetting in _model.SideRandomSettings)
             {
+                _spawnService.ClearSpawnPoints(sideRandomSetting.SideID);
                 DestroyUnits(sideRandomSetting.SideID);
                 PrepareArmy(sideRandomSetting);
             }

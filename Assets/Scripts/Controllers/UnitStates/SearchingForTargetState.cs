@@ -37,7 +37,6 @@ namespace Controllers.UnitStates
         public override void StartState()
         {
             _targetService = ServiceLocator.Get<TargetService>();
-            Unit.View.Callback = DrawGizmo; //todo: delete
         }
 
         public override void UpdateLocal(float deltaTime)
@@ -90,12 +89,6 @@ namespace Controllers.UnitStates
                 Unit.Model.SetTarget(closestTarget);
                 Unit.HandleState(Unit.MovingToTargetState);
             }
-        }
-        
-        private void DrawGizmo()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(Unit.Model.Position, Unit.Model.AttackDistance);
         }
     }
 }

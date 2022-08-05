@@ -28,13 +28,13 @@ namespace Services
         {
             return _fixUpdatables.Where(predicate);
         }
-        
+
 
         public void FixedUpdateLocal()
         {
-            foreach (var updatable in _fixUpdatables)
+            for (var index = 0; index < _fixUpdatables.Count; index++)
             {
-                updatable.FixedUpdateLocal();
+                _fixUpdatables[index].FixedUpdateLocal();
             }
         }
     }

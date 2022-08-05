@@ -27,7 +27,6 @@ namespace Controllers.UnitStates
 
         public override void StartState()
         {
-            Unit.View.Callback = null; //todo: delete
         }
 
         public override void UpdateLocal(float deltaTime)
