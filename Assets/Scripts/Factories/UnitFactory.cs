@@ -46,14 +46,17 @@ namespace Factories
             GameObject root;
             GameObject shape;
             float size;
+            float baseTimeBetweenAttack;
             SpawnData spawnData;
 
             if (baseDescription is IBaseUnitCharacteristicDescription baseData)
             {
                 root = baseData.RootPrefab;
+                baseTimeBetweenAttack = baseData.BaseTimeBetweenAttack;
             }
             else
             {
+                baseTimeBetweenAttack = 0;
                 root = default;
             }
 
@@ -94,7 +97,7 @@ namespace Factories
                 spawnData = new SpawnData { Position = Vector3.zero, Rotation = quaternion.identity };
             }
 
-            var model = new UnitModel(healthData, attackData, speed, side);
+            var model = new UnitModel(healthData, attackData, speed, side, baseTimeBetweenAttack);
             var unit = new UnitController(model, root, shape, spawnData, color, size);
 
             return unit;
@@ -118,14 +121,16 @@ namespace Factories
         {
             var attack = 0f;
             var attackSpeed = 0f;
+            var attackDistance = 0f;
 
             for (var i = 0; i < attackParams.Length; i++)
             {
                 attack += attackParams[i].Attack;
                 attackSpeed += attackParams[i].AttackSpeed;
+                attackDistance += attackParams[i].AttackDistance;
             }
 
-            return new AttackData { Attack = attack, AttackSpeed = attackSpeed };
+            return new AttackData { Attack = attack, AttackSpeed = attackSpeed , AttackDistance = attackDistance};
         }
     }
 }

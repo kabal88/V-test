@@ -8,25 +8,35 @@ namespace Controllers.UnitStates
         {
         }
 
-        public override void SetState(UnitStateBase newState)
+        public override void HandleState(UnitStateBase newState)
         {
             switch (newState)
             {
                 case DeadState deadState:
                     Unit.SetState(deadState);
-                    Dispose();
                     break;
                 case SearchingForTargetState searchingForTargetState:
                     Unit.SetState(searchingForTargetState);
-                    Dispose();
                     break;
                 default:
                     break;
             }
+            
+            
+        }
+
+        public override void StartState()
+        {
+            
         }
 
         public override void UpdateLocal(float deltaTime)
         {
+            if (!Unit.Model.IsAlive)
+            {
+                Unit.HandleState(Unit.DeadState);
+                return;
+            }
         }
     }
 }

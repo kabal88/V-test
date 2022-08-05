@@ -12,8 +12,17 @@ namespace Controllers.UnitStates
             Unit = unit;
         }
 
-        public abstract void SetState(UnitStateBase newState);
+        public abstract void HandleState(UnitStateBase newState);
+        public abstract void StartState();
         public abstract void UpdateLocal(float deltaTime);
+        
+        protected bool IsTargetReached()
+        {
+            var sqrDistance = (Unit.Model.Target.Position - Unit.Model.Position).sqrMagnitude;
+            var sqrAttackDistance = Unit.Model.AttackDistance * Unit.Model.AttackDistance;
+
+            return sqrDistance < sqrAttackDistance;
+        }
 
         public virtual void Dispose()
         {

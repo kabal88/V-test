@@ -7,5 +7,6 @@ namespace Data
     {
         public float Attack;
         public float AttackSpeed;
+        public float AttackDistance;
     }
 }

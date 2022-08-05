@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using System;
+using Interfaces;
 
 namespace Controllers.UnitStates
 {
@@ -8,14 +9,16 @@ namespace Controllers.UnitStates
         {
         }
 
-        public override void SetState(UnitStateBase newState)
+        public override void HandleState(UnitStateBase newState)
         {
-            throw new System.NotImplementedException();
+        }
+
+        public override void StartState()
+        {
         }
 
         public override void UpdateLocal(float deltaTime)
         {
-            throw new System.NotImplementedException();
         }
     }
 }
