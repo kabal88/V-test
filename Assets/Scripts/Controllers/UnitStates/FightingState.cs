@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using UnityEngine;
 
 namespace Controllers.UnitStates
 {
@@ -38,6 +39,8 @@ namespace Controllers.UnitStates
 
         public override void UpdateLocal(float deltaTime)
         {
+            Debug.DrawLine(Unit.Model.Position,Unit.Model.Target.Position,Color.magenta,Unit.Model.AttackDistance);
+            
             if (!Unit.Model.IsAlive)
             {
                 Unit.HandleState(Unit.DeadState);
@@ -59,6 +62,7 @@ namespace Controllers.UnitStates
             _currentCooldown += deltaTime;
             if (Unit.Model.TimeBetweenAttack < _currentCooldown)
             {
+                Unit.View.PlayAttackAnimation();
                 Unit.Model.Target.TakeDamage(Unit.Model.Attack);
                 _currentCooldown = 0;
             }

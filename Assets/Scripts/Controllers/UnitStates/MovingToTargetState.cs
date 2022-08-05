@@ -38,6 +38,8 @@ namespace Controllers.UnitStates
 
         public override void UpdateLocal(float deltaTime)
         {
+            Debug.DrawLine(Unit.Model.Position,Unit.Model.Target.Position,Color.gray,Unit.Model.AttackDistance);
+            
             if (!Unit.Model.IsAlive)
             {
                 Unit.HandleState(Unit.DeadState);

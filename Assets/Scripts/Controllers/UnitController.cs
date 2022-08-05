@@ -77,6 +77,7 @@ namespace Controllers
         public void TakeDamage(float damage)
         {
             _model.SetCurrentHealth(_model.CurrentHealth - damage);
+            _view.PlayHitedAnimation();
         }
 
         public void Dispose()
@@ -100,7 +101,10 @@ namespace Controllers
 
             _currentState.Dispose();
             _currentState = null;
+            
+            _model.Dispose();
             _model = null;
+            
             GameObject.Destroy(_view.gameObject);
             _view = null;
         }

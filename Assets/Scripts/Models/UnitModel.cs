@@ -1,10 +1,11 @@
-﻿using Data;
+﻿using System;
+using Data;
 using Interfaces;
 using UnityEngine;
 
 namespace Models
 {
-    public class UnitModel
+    public class UnitModel : IDisposable
     {
         private float _baseTimeBetweenAttack;
         public bool IsActive { get; private set; }
@@ -50,6 +51,11 @@ namespace Models
         public void SetCurrentHealth(float value)
         {
             CurrentHealth = value;
+        }
+
+        public void Dispose()
+        {
+            Target = null;
         }
     }
 }

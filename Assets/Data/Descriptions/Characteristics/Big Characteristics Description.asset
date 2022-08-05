@@ -21,4 +21,5 @@ MonoBehaviour:
     _attackData:
       Attack: 0
       AttackSpeed: 0
+      AttackDistance: 0.5
     _speed: 0

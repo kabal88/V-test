@@ -15,6 +15,7 @@ namespace Controllers.UnitStates
 
         public override void StartState()
         {
+            Unit.View.PlayDeadAnimation();
         }
 
         public override void UpdateLocal(float deltaTime)

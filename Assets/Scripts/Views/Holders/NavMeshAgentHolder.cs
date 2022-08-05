@@ -7,6 +7,11 @@ namespace Views
     {
         [SerializeField] private NavMeshAgent _agent;
 
+        public void SetActive(bool isOn)
+        {
+            _agent.enabled = isOn;
+        }
+        
         public void SetSpeed(float speed)
         {
             _agent.speed = speed;

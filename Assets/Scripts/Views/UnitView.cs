@@ -8,6 +8,8 @@ namespace Views
         private SizeHolder _sizeHolder;
         private NavMeshAgentHolder _navMeshAgentHolder;
         private AttackAnimationHolder _attackAnimationHolder;
+        private HitAnimationHolder _hitAnimationHolder;
+        private DeadAnimationHolder _deadAnimationHolder;
 
         public Vector3 Position => transform.position;
 
@@ -21,6 +23,9 @@ namespace Views
             _colorHolder.SetColor(color);
             _sizeHolder.SetSize(size);
             _attackAnimationHolder = GetComponentInChildren<AttackAnimationHolder>();
+            _hitAnimationHolder = GetComponentInChildren<HitAnimationHolder>();
+            _deadAnimationHolder = GetComponentInChildren<DeadAnimationHolder>();
+            _navMeshAgentHolder.SetActive(true);
         }
 
         public void SetTarget(Vector3 target)
@@ -28,9 +33,20 @@ namespace Views
             _navMeshAgentHolder.SetTarget(target);
         }
 
-        public void PlayHitAnimation()
+        public void PlayAttackAnimation()
         {
             _attackAnimationHolder.Play();
+        }
+
+        public void PlayDeadAnimation()
+        {
+            _deadAnimationHolder.Play();
+            _navMeshAgentHolder.SetActive(false);
+        }
+
+        public void PlayHitedAnimation()
+        {
+            _hitAnimationHolder.Play();
         }
     }
 }
