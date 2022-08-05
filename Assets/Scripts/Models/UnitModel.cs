@@ -14,14 +14,16 @@ namespace Models
         public float MaxHealth { get; }
         public float CurrentHealth { get; private set; }
         public float Speed { get; }
-        public float Attack { get;  }
-        public float AttackSpeed { get;  }
+        public float Attack { get; }
+        public float AttackSpeed { get; }
         public float AttackDistance { get; }
-        public float TimeBetweenAttack => _baseTimeBetweenAttack / AttackSpeed;
+        public float TimeBetweenAttack => AttackSpeed * _baseTimeBetweenAttack;
+        public float CurrentAttackCooldown { get; private set; }
         public ITarget Target { get; private set; }
         public Vector3 Position { get; private set; }
 
-        public UnitModel(HealthData healthData, AttackData attackData, float speed, int side, float baseTimeBetweenAttack)
+        public UnitModel(HealthData healthData, AttackData attackData, float speed, int side,
+            float baseTimeBetweenAttack)
         {
             MaxHealth = healthData.MaxHealth;
             CurrentHealth = healthData.CurrentHealth;
@@ -56,6 +58,11 @@ namespace Models
         public void Dispose()
         {
             Target = null;
+        }
+
+        public void SetCurrentAttackCooldown(float value)
+        {
+            CurrentAttackCooldown = value;
         }
     }
 }

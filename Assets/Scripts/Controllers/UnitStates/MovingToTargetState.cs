@@ -34,17 +34,19 @@ namespace Controllers.UnitStates
         public override void StartState()
         {
             Unit.View.SetTarget(Unit.Model.Target.Position);
+            Unit.View.Callback = DrawGizmo; //todo: delete
         }
 
         public override void UpdateLocal(float deltaTime)
         {
-            Debug.DrawLine(Unit.Model.Position,Unit.Model.Target.Position,Color.gray,Unit.Model.AttackDistance);
-            
             if (!Unit.Model.IsAlive)
             {
                 Unit.HandleState(Unit.DeadState);
                 return;
             }
+            
+            if (Unit.Model.TimeBetweenAttack >= Unit.Model.CurrentAttackCooldown)
+                Unit.Model.SetCurrentAttackCooldown(Unit.Model.CurrentAttackCooldown + deltaTime);
             
             if (!Unit.Model.Target.IsAlive)
             {
@@ -60,7 +62,15 @@ namespace Controllers.UnitStates
             
             Unit.View.SetTarget(Unit.Model.Target.Position);
             
-            //Debug.DrawLine(Unit.Model.Position, Unit.Model.Target.Position);
+           
+        }
+
+        private void DrawGizmo()
+        {
+            Gizmos.color = Color.gray;
+            Gizmos.DrawWireSphere(Unit.Model.Position, Unit.Model.AttackDistance);
+            Gizmos.color = Color.black;
+            Gizmos.DrawLine(Unit.Model.Position,Unit.Model.Target.Position);
         }
     }
 }

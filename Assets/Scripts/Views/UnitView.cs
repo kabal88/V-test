@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Views
 {
     public class UnitView : MonoBehaviour
     {
+        public Action Callback; //todo: delete
+        
         private ColorHolder _colorHolder;
         private SizeHolder _sizeHolder;
         private NavMeshAgentHolder _navMeshAgentHolder;
@@ -47,6 +50,11 @@ namespace Views
         public void PlayHitedAnimation()
         {
             _hitAnimationHolder.Play();
+        }
+
+        private void OnDrawGizmos() //todo: delete
+        {
+            Callback?.Invoke();
         }
     }
 }

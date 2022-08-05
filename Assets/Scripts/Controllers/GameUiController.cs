@@ -27,6 +27,11 @@ namespace Controllers
             _sidesID.Add(sidesID);
         }
 
+        public void SetUIActive(bool isOn)
+        {
+            _view.SetActive(isOn);
+        }
+
         private void OnStartButtonClicked()
         {
             StartButtonClicked?.Invoke();

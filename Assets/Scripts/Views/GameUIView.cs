@@ -28,6 +28,11 @@ namespace Views
             _rerollBottomArmyButton.Init();
             _rerollBottomArmyButton.Button.onClick.AddListener(OnRerollBottomArmyButtonClicked);
         }
+
+        public void SetActive(bool isOn)
+        {
+            gameObject.SetActive(isOn);
+        }
         
         private void OnStartButtonClicked()
         {

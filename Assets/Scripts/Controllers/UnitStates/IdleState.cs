@@ -27,7 +27,7 @@ namespace Controllers.UnitStates
 
         public override void StartState()
         {
-            
+            Unit.View.Callback = null; //todo: delete
         }
 
         public override void UpdateLocal(float deltaTime)
@@ -37,6 +37,9 @@ namespace Controllers.UnitStates
                 Unit.HandleState(Unit.DeadState);
                 return;
             }
+
+            if (Unit.Model.TimeBetweenAttack >= Unit.Model.CurrentAttackCooldown)
+                Unit.Model.SetCurrentAttackCooldown(Unit.Model.CurrentAttackCooldown + deltaTime);
         }
     }
 }

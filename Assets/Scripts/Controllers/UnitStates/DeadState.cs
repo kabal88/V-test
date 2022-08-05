@@ -1,5 +1,7 @@
 ﻿using System;
 using Interfaces;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Controllers.UnitStates
 {
@@ -16,10 +18,12 @@ namespace Controllers.UnitStates
         public override void StartState()
         {
             Unit.View.PlayDeadAnimation();
+            Unit.OnDead();
         }
 
         public override void UpdateLocal(float deltaTime)
         {
+            
         }
     }
 }

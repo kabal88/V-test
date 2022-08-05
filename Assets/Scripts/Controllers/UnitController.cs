@@ -11,6 +11,8 @@ namespace Controllers
 {
     public class UnitController : ITarget, IUpdatable, IActivatable, IUnitContext, IDisposable
     {
+        public event Action<int> Dead;
+
         private UnitModel _model;
         private UnitView _view;
 
@@ -72,6 +74,11 @@ namespace Controllers
         public void HandleState(UnitStateBase newState)
         {
             _currentState.HandleState(newState);
+        }
+
+        public void OnDead()
+        {
+            Dead?.Invoke(_model.Side);
         }
 
         public void TakeDamage(float damage)

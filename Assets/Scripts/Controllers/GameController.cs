@@ -54,6 +54,8 @@ namespace Controllers
 
         private void OnStartGame()
         {
+            _gameUIController.SetUIActive(false);
+
             foreach (var unit in _model.UnitsOnField)
             {
                 unit.SetActive(true);
@@ -63,7 +65,7 @@ namespace Controllers
         private void OnRerollArmy(int sideID)
         {
             DestroyUnits(sideID);
-            
+
             _spawnService.ClearSpawnPoints(sideID);
 
             foreach (var setting in _model.SideRandomSettings.Where(settings => settings.SideID == sideID))
@@ -72,18 +74,39 @@ namespace Controllers
             }
         }
 
+        private void OnUnitDead(int sideID)
+        {
+            var count = _model.GetObjectsByPredicate(unit => unit.Side == sideID & unit.IsAlive).Count();
+            if (count <= 0)
+            {
+                Restart();
+            }
+        }
+
+        private void Restart()
+        {
+            foreach (var sideRandomSetting in _model.SideRandomSettings)
+            {
+                DestroyUnits(sideRandomSetting.SideID);
+                PrepareArmy(sideRandomSetting);
+            }
+            
+            _gameUIController.SetUIActive(true);
+        }
+
         private void DestroyUnits(int sideID)
         {
-            var units = _model.GetObjectsByPredicate(unit => unit.Side == sideID);
+            var units = _model.GetObjectsByPredicate(unit => unit.Side == sideID).ToArray();
 
             foreach (var unit in units)
             {
                 unit.Dispose();
+                unit.Dead -= OnUnitDead;
                 _targetService.UnRegisterObject(unit);
                 _model.UnRegisterObject(unit);
             }
         }
-        
+
         private void PrepareAllArmies()
         {
             foreach (var setting in _model.SideRandomSettings)
@@ -112,6 +135,7 @@ namespace Controllers
                 };
 
                 var unit = _unitFactory.CreateUnit(config, spawnPoint);
+                unit.Dead += OnUnitDead;
                 _model.RegisterObject(unit);
                 _targetService.RegisterObject(unit);
             }

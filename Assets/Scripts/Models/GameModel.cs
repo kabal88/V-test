@@ -35,5 +35,10 @@ namespace Models
         {
             return UnitsOnField.Where(predicate);
         }
+
+        public void ClearUnitsList()
+        {
+            _unitsOnField.Clear();
+        }
     }
 }

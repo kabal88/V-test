@@ -25,5 +25,7 @@ namespace Interfaces
         /// </summary>
         /// <param name="newState"></param>
         void HandleState(UnitStateBase newState);
+
+        void OnDead();
     }
 }

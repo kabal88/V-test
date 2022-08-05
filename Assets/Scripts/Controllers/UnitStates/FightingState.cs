@@ -5,8 +5,6 @@ namespace Controllers.UnitStates
 {
     public class FightingState : UnitStateBase
     {
-        private float _currentCooldown;
-
         public FightingState(IUnitContext unit) : base(unit)
         {
         }
@@ -34,18 +32,19 @@ namespace Controllers.UnitStates
 
         public override void StartState()
         {
-            _currentCooldown = 0;
+            Unit.View.Callback = DrawGizmo; //todo: delete
         }
 
         public override void UpdateLocal(float deltaTime)
         {
-            Debug.DrawLine(Unit.Model.Position,Unit.Model.Target.Position,Color.magenta,Unit.Model.AttackDistance);
-            
             if (!Unit.Model.IsAlive)
             {
                 Unit.HandleState(Unit.DeadState);
                 return;
             }
+
+            if (Unit.Model.TimeBetweenAttack >= Unit.Model.CurrentAttackCooldown)
+                Unit.Model.SetCurrentAttackCooldown(Unit.Model.CurrentAttackCooldown + deltaTime);
 
             if (!Unit.Model.Target.IsAlive)
             {
@@ -53,19 +52,24 @@ namespace Controllers.UnitStates
                 return;
             }
 
-            if (IsTargetReached())
+            if (!IsTargetReached())
             {
                 Unit.HandleState(Unit.MovingToTargetState);
                 return;
             }
 
-            _currentCooldown += deltaTime;
-            if (Unit.Model.TimeBetweenAttack < _currentCooldown)
+            if (Unit.Model.TimeBetweenAttack < Unit.Model.CurrentAttackCooldown)
             {
                 Unit.View.PlayAttackAnimation();
                 Unit.Model.Target.TakeDamage(Unit.Model.Attack);
-                _currentCooldown = 0;
+                Unit.Model.SetCurrentAttackCooldown(0);
             }
+        }
+
+        private void DrawGizmo()
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(Unit.Model.Position, Unit.Model.AttackDistance);
         }
     }
 }
